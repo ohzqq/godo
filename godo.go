@@ -11,29 +11,29 @@ func NewResponse(status int, body any) Response {
 	}
 }
 
-func (r *Response) SetHeader(k, v string) {
+func (r Response) SetHeader(k, v string) {
 	h := r.Headers()
 	h[k] = v
 	r["headers"] = h
 }
 
-func (r *Response) Headers() map[string]string {
+func (r Response) Headers() map[string]string {
 	if _, ok := r["headers"]; !ok {
 		return map[string]string{}
 	}
 	return cast.ToStringMapString(r["headers"])
 }
 
-func (r *Response) ContentType(v string) {
+func (r Response) ContentType(v string) {
 	r.SetHeader("Content-Type", v)
 }
 
-func (r *Response) JSON() *Response {
+func (r Response) JSON() Response {
 	r.ContentType("application/json")
 	return r
 }
 
-func (r *Response) XML() *Response {
+func (r Response) XML() Response {
 	r.ContentType("application/xml")
 	return r
 }
